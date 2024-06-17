@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -9,6 +10,7 @@ import FormInput from "./FormInput";
 import { Button } from "./ui/button";
 import SocialIconButton from "./SocialIconButton";
 import { FaGithub, FaGoogle } from "react-icons/fa";
+import { useToast } from "./ui/use-toast";
 
 //ZOD FORM SCHEMA
 
@@ -25,9 +27,9 @@ interface LoginFormProps {
 
 // AUTH FORM COMPONENT
 const RegisterForm: React.FC<LoginFormProps> = ({ setVariant }) => {
-  // LOGIN OR REGISTER
-
   const [isLoading, setIsLoading] = useState(false);
+
+  const { toast } = useToast();
 
   // USE FORM
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -46,11 +48,22 @@ const RegisterForm: React.FC<LoginFormProps> = ({ setVariant }) => {
   } = form;
 
   // ON SUBMIT FUNCTION
-  const onSubmit: SubmitHandler<z.infer<typeof registerSchema>> = (data) => {
+  const onSubmit: SubmitHandler<z.infer<typeof registerSchema>> = async (
+    data
+  ) => {
     setIsLoading(true);
-    console.log(data);
 
-    //register
+    // REGISTER USER
+    await axios
+      .post("/api/register", data)
+      .catch((error) => {
+        toast({
+          variant: "destructive",
+          title: "An Error Occured!",
+          description: `${error.response.data}`,
+        });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (

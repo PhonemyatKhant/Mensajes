@@ -2,14 +2,16 @@ import bcrypt from "bcrypt";
 import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
     // GET PASSED BODY DATA FROM THE REQUEST
-    const body = await req.json();
-    const { email, name, password } = body;
+    const body = await request.json();
+    console.log(body);
+
+    const { email, username, password } = body;
 
     // CHECK IF THE DATA IS PRESENT
-    if (!email || !name || !password) {
+    if (!email || !username || !password) {
       return new NextResponse("Missing Information", { status: 400 });
     }
 
@@ -20,7 +22,7 @@ export async function POST(req: Request) {
     const user = await prisma.user.create({
       data: {
         email,
-        name,
+        name: username,
         hashedPassword,
       },
     });

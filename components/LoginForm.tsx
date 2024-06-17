@@ -9,6 +9,8 @@ import FormInput from "./FormInput";
 import { Button } from "./ui/button";
 import SocialIconButton from "./SocialIconButton";
 import { FaGithub, FaGoogle } from "react-icons/fa";
+import { signIn } from "next-auth/react";
+import { useToast } from "./ui/use-toast";
 
 //ZOD FORM SCHEMA
 
@@ -27,6 +29,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant }) => {
   // LOGIN OR REGISTER
 
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   // USE FORM
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -46,9 +49,26 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant }) => {
   // ON SUBMIT FUNCTION
   const onSubmit: SubmitHandler<z.infer<typeof loginSchema>> = (data) => {
     setIsLoading(true);
-    console.log(data);
 
-    //register
+    //LOGIN TO WEBSITE
+    signIn("credentials", {
+      ...data,
+      redirect: false,
+    })
+      .then((callback) => {
+        if (callback?.error) {
+          toast({
+            variant: "destructive",
+            description: `${callback.error}`,
+          });
+        }
+        if (callback?.ok && !callback.error) {
+          toast({
+            description: `Login successful!`,
+          });
+        }
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
