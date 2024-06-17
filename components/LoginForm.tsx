@@ -71,6 +71,28 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant }) => {
       .finally(() => setIsLoading(false));
   };
 
+  // SOCIAL LOGIN FUNCTION GITHUB GOOGLE
+
+  const socialLoginHandler = (provider: string) => {
+    //LOGIN TO WEBSITE
+    signIn(provider, {
+      redirect: false,
+    })
+      .then((callback) => {
+        if (callback?.error) {
+          toast({
+            variant: "destructive",
+            description: `${callback.error}`,
+          });
+        }
+        if (callback?.ok && !callback.error) {
+          toast({
+            description: `Login successful!`,
+          });
+        }
+      })
+      .finally(() => setIsLoading(false));
+  };
   return (
     <div>
       <Form {...form}>
@@ -125,15 +147,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant }) => {
           <div className="flex gap-2 justify-between">
             <SocialIconButton
               icon={FaGithub}
-              onClickFunction={() => {
-                console.log("clicked");
-              }}
+              onClickFunction={() => socialLoginHandler("github")}
             />
             <SocialIconButton
               icon={FaGoogle}
-              onClickFunction={() => {
-                console.log("clicked");
-              }}
+              onClickFunction={() => socialLoginHandler("google")}
             />
           </div>
         </form>

@@ -29,13 +29,11 @@ export const authOptions: AuthOptions = {
 
       async authorize(credentials) {
         // IF NO INPUT VALUES THROW ERROR
-
         if (!credentials?.email || !credentials?.password) {
           throw new Error("Invalid credentials");
         }
 
         // FIND USER FROM DB USING EMAIL THAT COMES FROM INPUT FIELD
-
         const user = await prisma.user.findUnique({
           where: {
             email: credentials.email,
@@ -43,7 +41,6 @@ export const authOptions: AuthOptions = {
         });
 
         // IF NO USER OR NO USER PASSWORD THROW ERROR
-
         if (!user || !user?.hashedPassword) {
           throw new Error("Invalid credentials");
         }
@@ -64,9 +61,9 @@ export const authOptions: AuthOptions = {
     }),
   ],
 
-//   ON DEVELOPMENT ENABLE DEBUG OPTIONS 
+  //   ON DEVELOPMENT ENABLE DEBUG OPTIONS
   debug: process.env.NODE_ENV === "development",
-  
+
   session: {
     strategy: "jwt",
   },
