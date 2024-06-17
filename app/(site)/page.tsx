@@ -1,8 +1,11 @@
 "use client";
 import LoginForm from "@/components/LoginForm";
 import RegisterForm from "@/components/RegisterForm";
+
+
 import Image from "next/image";
 import React, { useState } from "react";
+
 
 type Variant = "LOGIN" | "REGISTER";
 const Homepage = () => {
@@ -18,14 +21,20 @@ const Homepage = () => {
           width={56}
           className=" mx-auto  w-auto"
         />
+
         <h2 className=" mt-6 text-clip text-center text-3xl font-bold tracking-tight text-gray-900">
           Sign in to your account
         </h2>
+
+        {/* INPUT FORM LOGIN AND REGISTER  */}
+
         {variant === "LOGIN" ? (
           <LoginForm setVariant={setVariant} />
         ) : (
           <RegisterForm setVariant={setVariant} />
         )}
+
+       
       </div>
     </div>
   );

@@ -7,6 +7,8 @@ import { z } from "zod";
 import { Form } from "./ui/form";
 import FormInput from "./FormInput";
 import { Button } from "./ui/button";
+import SocialIconButton from "./SocialIconButton";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
 //ZOD FORM SCHEMA
 
@@ -67,6 +69,7 @@ const RegisterForm: React.FC<LoginFormProps> = ({ setVariant }) => {
             required={true}
             register={register}
             errors={errors}
+            disabled={isLoading}
           />
 
           <FormInput
@@ -78,6 +81,7 @@ const RegisterForm: React.FC<LoginFormProps> = ({ setVariant }) => {
             required={true}
             register={register}
             errors={errors}
+            disabled={isLoading}
           />
           <FormInput
             control={form.control}
@@ -88,6 +92,7 @@ const RegisterForm: React.FC<LoginFormProps> = ({ setVariant }) => {
             required={true}
             register={register}
             errors={errors}
+            disabled={isLoading}
           />
           <Button className=" w-full" size="sm" disabled={isLoading}>
             Register
@@ -105,6 +110,23 @@ const RegisterForm: React.FC<LoginFormProps> = ({ setVariant }) => {
               </Button>
             </span>
           </h2>
+
+          {/* SOCIAL ICONS  */}
+
+          <div className="flex gap-2 justify-between">
+            <SocialIconButton
+              icon={FaGithub}
+              onClickFunction={() => {
+                console.log("clicked");
+              }}
+            />
+            <SocialIconButton
+              icon={FaGoogle}
+              onClickFunction={() => {
+                console.log("clicked");
+              }}
+            />
+          </div>
         </form>
       </Form>
     </div>

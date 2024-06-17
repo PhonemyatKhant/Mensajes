@@ -7,6 +7,8 @@ import { z } from "zod";
 import { Form } from "./ui/form";
 import FormInput from "./FormInput";
 import { Button } from "./ui/button";
+import SocialIconButton from "./SocialIconButton";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
 //ZOD FORM SCHEMA
 
@@ -54,7 +56,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant }) => {
       <Form {...form}>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="space-y-2 bg-white p-10 rounded-lg mt-7"
+          className="space-y-2 w-full bg-white p-10 rounded-lg mt-7"
         >
           <FormInput
             control={form.control}
@@ -65,6 +67,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant }) => {
             required={true}
             register={register}
             errors={errors}
+            disabled={isLoading}
           />
           <FormInput
             control={form.control}
@@ -75,7 +78,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant }) => {
             required={true}
             register={register}
             errors={errors}
+            disabled={isLoading}
           />
+
+          {/* SUBMIT BUTTON  */}
+
           <Button className=" w-full" size="sm" disabled={isLoading}>
             Login
           </Button>
@@ -83,18 +90,34 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant }) => {
             Don't have an account?
             <span>
               <Button
-              className="p-1"
+                className="p-1"
                 variant="link"
                 type="button"
                 onClick={() => setVariant("REGISTER")}
               >
-                register
+                create an account
               </Button>
             </span>
           </h2>
+
+          {/* SOCIAL ICONS  */}
+
+          <div className="flex gap-2 justify-between">
+            <SocialIconButton
+              icon={FaGithub}
+              onClickFunction={() => {
+                console.log("clicked");
+              }}
+            />
+            <SocialIconButton
+              icon={FaGoogle}
+              onClickFunction={() => {
+                console.log("clicked");
+              }}
+            />
+          </div>
         </form>
       </Form>
-
     </div>
   );
 };
