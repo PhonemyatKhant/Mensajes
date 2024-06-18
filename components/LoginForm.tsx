@@ -11,6 +11,7 @@ import SocialIconButton from "./SocialIconButton";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 import { useToast } from "./ui/use-toast";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 //ZOD FORM SCHEMA
 
@@ -22,10 +23,11 @@ const loginSchema = z.object({
 // DEFINE PROPS TYPE
 interface LoginFormProps {
   setVariant: React.Dispatch<React.SetStateAction<"LOGIN" | "REGISTER">>;
+  router: AppRouterInstance;
 }
 
 // AUTH FORM COMPONENT
-const LoginForm: React.FC<LoginFormProps> = ({ setVariant }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ setVariant, router }) => {
   // LOGIN OR REGISTER
 
   const [isLoading, setIsLoading] = useState(false);
@@ -66,6 +68,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant }) => {
           toast({
             description: `Login successful!`,
           });
+          router.push("/users");
         }
       })
       .finally(() => setIsLoading(false));
@@ -86,9 +89,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant }) => {
           });
         }
         if (callback?.ok && !callback.error) {
-          toast({
-            description: `Login successful!`,
-          });
+          // toast({
+          //   description: `Login successful!`,
+          // });
+          router.push("/users");
         }
       })
       .finally(() => setIsLoading(false));

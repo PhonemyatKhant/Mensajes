@@ -12,6 +12,7 @@ import SocialIconButton from "./SocialIconButton";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { useToast } from "./ui/use-toast";
 import { signIn } from "next-auth/react";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 //ZOD FORM SCHEMA
 
@@ -24,10 +25,11 @@ const registerSchema = z.object({
 // DEFINE PROPS TYPE
 interface LoginFormProps {
   setVariant: React.Dispatch<React.SetStateAction<"LOGIN" | "REGISTER">>;
+  router: AppRouterInstance;
 }
 
 // AUTH FORM COMPONENT
-const RegisterForm: React.FC<LoginFormProps> = ({ setVariant }) => {
+const RegisterForm: React.FC<LoginFormProps> = ({ setVariant, router }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { toast } = useToast();
@@ -57,6 +59,12 @@ const RegisterForm: React.FC<LoginFormProps> = ({ setVariant }) => {
     // REGISTER USER
     await axios
       .post("/api/register", data)
+      .then(() => {
+        signIn("credentials", {
+          ...data,
+          redirect: false,
+        });
+      })
       .catch((error) => {
         toast({
           variant: "destructive",
@@ -82,9 +90,10 @@ const RegisterForm: React.FC<LoginFormProps> = ({ setVariant }) => {
           });
         }
         if (callback?.ok && !callback.error) {
-          toast({
-            description: `Login successful!`,
-          });
+          // toast({
+          //   description: `Login successful!`,
+          // });
+          router.push("/users");
         }
       })
       .finally(() => setIsLoading(false));
