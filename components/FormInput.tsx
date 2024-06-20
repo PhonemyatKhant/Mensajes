@@ -15,13 +15,16 @@ import {
   UseFormReturn,
 } from "react-hook-form";
 import { cn } from "@/lib/utils";
-import { formSchema } from "./LoginForm";
 import { z } from "zod";
+import { loginSchema, registerSchema } from "@/schemas/authSchema";
 
 interface formProps {
-  control: Control<z.infer<typeof formSchema>>;
+  form:
+    | UseFormReturn<z.infer<typeof loginSchema | typeof registerSchema>>
+    | any;
+  // control: Control<z.infer<typeof loginSchema | typeof registerSchema>>;
   placeholder: string;
-  name: keyof z.infer<typeof formSchema>;
+  name: string | any;
   label: string;
   type: string;
   required?: boolean;
@@ -30,10 +33,8 @@ interface formProps {
   register: any;
 }
 
-
-
 const FormInput: React.FC<formProps> = ({
-  control,
+  form,
   placeholder,
   name,
   label,
@@ -45,7 +46,7 @@ const FormInput: React.FC<formProps> = ({
 }) => {
   return (
     <FormField
-      control={control}
+      control={form.control}
       name={name}
       render={({ field }) => (
         <FormItem>

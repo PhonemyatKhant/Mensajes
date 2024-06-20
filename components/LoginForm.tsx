@@ -12,13 +12,7 @@ import { FaGithub, FaGoogle } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 import { useToast } from "./ui/use-toast";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-
-//ZOD FORM SCHEMA
-
-const loginSchema = z.object({
-  email: z.string().email("This is not a valid email!"),
-  password: z.string().min(5, { message: "Must be 5 or more characters long" }),
-});
+import { loginSchema } from "@/schemas/authSchema";
 
 // DEFINE PROPS TYPE
 interface LoginFormProps {
@@ -105,7 +99,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant, router }) => {
           className="space-y-2 w-full bg-white p-10 rounded-lg mt-7"
         >
           <FormInput
-            control={form.control}
+            form={form}
             placeholder="example@email.com"
             name="email"
             label="Email"
@@ -116,7 +110,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant, router }) => {
             disabled={isLoading}
           />
           <FormInput
-            control={form.control}
+            form={form}
             placeholder="*******"
             name="password"
             label="Password"
