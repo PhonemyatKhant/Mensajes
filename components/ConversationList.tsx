@@ -61,9 +61,9 @@ const ConversationList: React.FC<ConversationListProps> = ({
             <MdOutlineGroupAdd size={20} />
           </div>
         </div>
-        {items.map((item) => (
+        {items.map((item,i) => (
           <ConversationBox
-            key={item.id}
+            key={item?.id}
             data={item}
             // IT IS SELECTED IF CONVERSATION ID FROM PARAMS IS EQUAL TO CONVERSATION BOX'S ID
             selected={conversationId === item.id}

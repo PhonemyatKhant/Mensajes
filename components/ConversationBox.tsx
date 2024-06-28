@@ -75,8 +75,11 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
     // IF NO MESSAGE BUT ONLY CONVERSATION
     return "Started a conversation";
   }, [lastMessage]);
+
+  
   return (
     <div
+      key={key}
       onClick={handleClick}
       className={clsx(
         `
