@@ -10,8 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { HiPaperAirplane } from "react-icons/hi";
 import { HiPhoto } from "react-icons/hi2";
-import FormInput from "./FormInput";
 import MessageInput from "./MessageInput";
+import { CldUploadButton } from "next-cloudinary";
 
 const ConversationForm = () => {
   const { conversationId } = useConversation();
@@ -43,6 +43,14 @@ const ConversationForm = () => {
     });
   };
 
+  // ON UPLOAD IMAGE : SENT IMAGE
+  const handleUploadImage = (result: any) => {
+    axios.post("/api/messages", {
+      image: result.info.secure_url,
+      conversationId: conversationId,
+    });
+  };
+
   return (
     <div
       className="
@@ -59,13 +67,13 @@ const ConversationForm = () => {
     dark:border-lightgray
   "
     >
-      {/* <CldUploadButton
-    options={{ maxFiles: 1 }}
-    onUpload={handleUpload}
-    uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME}
-  > */}
-      <HiPhoto size={30} className="text-primary/80" />
-      {/* </CldUploadButton> */}
+      <CldUploadButton
+        options={{ maxFiles: 1 }}
+        onUpload={handleUploadImage}
+        uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME}
+      >
+        <HiPhoto size={30} className="text-primary/80" />
+      </CldUploadButton>
       <Form {...form}>
         <form
           onSubmit={handleSubmit(onSubmit)}
