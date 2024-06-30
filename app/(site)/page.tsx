@@ -1,15 +1,25 @@
+// LOG IN REGISTER PAGE 
+
 "use client";
 import LoginForm from "@/components/LoginForm";
 import RegisterForm from "@/components/RegisterForm";
-
+import { useSession } from "next-auth/react";
 
 import Image from "next/image";
-import React, { useState } from "react";
-
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 type Variant = "LOGIN" | "REGISTER";
 const Homepage = () => {
-  const [variant, setVariant] = useState<Variant>("REGISTER");
+  const [variant, setVariant] = useState<Variant>("LOGIN");
+  const session = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      router.push("/users");
+    }
+  }, [session.status]);
 
   return (
     <div className=" flex min-h-screen flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gray-100 ">
@@ -29,12 +39,10 @@ const Homepage = () => {
         {/* INPUT FORM LOGIN AND REGISTER  */}
 
         {variant === "LOGIN" ? (
-          <LoginForm setVariant={setVariant} />
+          <LoginForm router={router} setVariant={setVariant} />
         ) : (
-          <RegisterForm setVariant={setVariant} />
+          <RegisterForm router={router} setVariant={setVariant} />
         )}
-
-       
       </div>
     </div>
   );

@@ -12,22 +12,17 @@ import SocialIconButton from "./SocialIconButton";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { useToast } from "./ui/use-toast";
 import { signIn } from "next-auth/react";
-
-//ZOD FORM SCHEMA
-
-const registerSchema = z.object({
-  email: z.string().email("This is not a valid email!"),
-  password: z.string().min(5, { message: "Must be 5 or more characters long" }),
-  username: z.string().min(1, { message: "Username is required" }),
-});
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { registerSchema } from "@/schemas/authSchema";
 
 // DEFINE PROPS TYPE
 interface LoginFormProps {
   setVariant: React.Dispatch<React.SetStateAction<"LOGIN" | "REGISTER">>;
+  router: AppRouterInstance;
 }
 
 // AUTH FORM COMPONENT
-const RegisterForm: React.FC<LoginFormProps> = ({ setVariant }) => {
+const RegisterForm: React.FC<LoginFormProps> = ({ setVariant, router }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { toast } = useToast();
@@ -57,6 +52,12 @@ const RegisterForm: React.FC<LoginFormProps> = ({ setVariant }) => {
     // REGISTER USER
     await axios
       .post("/api/register", data)
+      .then(() => {
+        signIn("credentials", {
+          ...data,
+          redirect: false,
+        });
+      })
       .catch((error) => {
         toast({
           variant: "destructive",
@@ -82,9 +83,10 @@ const RegisterForm: React.FC<LoginFormProps> = ({ setVariant }) => {
           });
         }
         if (callback?.ok && !callback.error) {
-          toast({
-            description: `Login successful!`,
-          });
+          // toast({
+          //   description: `Login successful!`,
+          // });
+          router.push("/users");
         }
       })
       .finally(() => setIsLoading(false));
@@ -98,7 +100,7 @@ const RegisterForm: React.FC<LoginFormProps> = ({ setVariant }) => {
           className="space-y-2 bg-white p-10 rounded-lg mt-7"
         >
           <FormInput
-            control={form.control}
+            form={form}
             placeholder="Your Username"
             name="username"
             label="Username"
@@ -110,7 +112,7 @@ const RegisterForm: React.FC<LoginFormProps> = ({ setVariant }) => {
           />
 
           <FormInput
-            control={form.control}
+            form={form}
             placeholder="example@email.com"
             name="email"
             label="Email"
@@ -121,7 +123,7 @@ const RegisterForm: React.FC<LoginFormProps> = ({ setVariant }) => {
             disabled={isLoading}
           />
           <FormInput
-            control={form.control}
+            form={form}
             placeholder="*******"
             name="password"
             label="Password"

@@ -6,7 +6,7 @@ export async function POST(request: Request) {
   try {
     // GET PASSED BODY DATA FROM THE REQUEST
     const body = await request.json();
-    console.log(body);
+    // console.log(body);
 
     const { email, username, password } = body;
 

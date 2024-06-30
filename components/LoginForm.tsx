@@ -11,21 +11,17 @@ import SocialIconButton from "./SocialIconButton";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 import { useToast } from "./ui/use-toast";
-
-//ZOD FORM SCHEMA
-
-const loginSchema = z.object({
-  email: z.string().email("This is not a valid email!"),
-  password: z.string().min(5, { message: "Must be 5 or more characters long" }),
-});
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { loginSchema } from "@/schemas/authSchema";
 
 // DEFINE PROPS TYPE
 interface LoginFormProps {
   setVariant: React.Dispatch<React.SetStateAction<"LOGIN" | "REGISTER">>;
+  router: AppRouterInstance;
 }
 
 // AUTH FORM COMPONENT
-const LoginForm: React.FC<LoginFormProps> = ({ setVariant }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ setVariant, router }) => {
   // LOGIN OR REGISTER
 
   const [isLoading, setIsLoading] = useState(false);
@@ -66,6 +62,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant }) => {
           toast({
             description: `Login successful!`,
           });
+          router.push("/users");
         }
       })
       .finally(() => setIsLoading(false));
@@ -86,9 +83,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant }) => {
           });
         }
         if (callback?.ok && !callback.error) {
-          toast({
-            description: `Login successful!`,
-          });
+          // toast({
+          //   description: `Login successful!`,
+          // });
+          router.push("/users");
         }
       })
       .finally(() => setIsLoading(false));
@@ -101,7 +99,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant }) => {
           className="space-y-2 w-full bg-white p-10 rounded-lg mt-7"
         >
           <FormInput
-            control={form.control}
+            form={form}
             placeholder="example@email.com"
             name="email"
             label="Email"
@@ -112,7 +110,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant }) => {
             disabled={isLoading}
           />
           <FormInput
-            control={form.control}
+            form={form}
             placeholder="*******"
             name="password"
             label="Password"
