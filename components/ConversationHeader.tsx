@@ -3,10 +3,12 @@
 import useOtherUser from "@/app/hooks/useOtherUser";
 import { Conversation, User } from "@prisma/client";
 import Link from "next/link";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { HiChevronLeft } from "react-icons/hi";
 import Avatar from "./Avatar";
 import { HiEllipsisHorizontal } from "react-icons/hi2";
+import { Sheet, SheetTrigger } from "./ui/sheet";
+import ProfileSheet from "./ProfileSheet";
 
 interface ConversationHeaderProps {
   conversation: Conversation & {
@@ -18,6 +20,8 @@ const ConversationHeader: React.FC<ConversationHeaderProps> = ({
   conversation,
 }) => {
   const otherUser = useOtherUser(conversation);
+
+  const [open, setOpen] = useState(false);
 
   // ACTIVE STATUS OR NO. OF GROUP MEMBERS
   const statusText = useMemo(() => {
@@ -79,16 +83,22 @@ const ConversationHeader: React.FC<ConversationHeaderProps> = ({
             </div>
           </div>
         </div>
-        <HiEllipsisHorizontal
-          size={32}
-          // onClick={() => setDrawerOpen(true)}
-          className="
+        <Sheet onOpenChange={setOpen} open={open}>
+          <SheetTrigger>
+            <HiEllipsisHorizontal
+              size={32}
+              // onClick={() => setOpenSheet(true)}
+              className="
           text-primary/80
           cursor-pointer
           hover:text-primary
           transition
         "
-        />
+            />
+            
+          </SheetTrigger>
+          <ProfileSheet data={conversation} />
+        </Sheet>
       </div>
     </>
   );
