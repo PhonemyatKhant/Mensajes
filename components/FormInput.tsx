@@ -17,15 +17,16 @@ import {
 import { cn } from "@/lib/utils";
 import { z } from "zod";
 import { loginSchema, registerSchema } from "@/schemas/authSchema";
+import { conversationFormSchema } from "@/schemas/conversationFormSchema";
 
 interface formProps {
   form:
-    | UseFormReturn<z.infer<typeof loginSchema | typeof registerSchema>>
+    | UseFormReturn<z.infer<typeof loginSchema | typeof registerSchema | typeof conversationFormSchema>>
     | any;
   // control: Control<z.infer<typeof loginSchema | typeof registerSchema>>;
-  placeholder: string;
+  placeholder?: string;
   name: string | any;
-  label: string;
+  label?: string;
   type: string;
   required?: boolean;
   disabled?: boolean;
