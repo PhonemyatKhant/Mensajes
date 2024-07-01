@@ -16,7 +16,7 @@ interface DesktopSidebarProps {
   currentUser: User;
 }
 
-const  DesktopSidebar: React.FC<DesktopSidebarProps> = ({ currentUser }) => {
+const DesktopSidebar: React.FC<DesktopSidebarProps> = ({ currentUser }) => {
   //GET routes ARRAY CONTAINING ICONS, LABELS, SIGN OUT, etc..
   const routes = useRoutes();
 
@@ -44,7 +44,7 @@ const  DesktopSidebar: React.FC<DesktopSidebarProps> = ({ currentUser }) => {
       >
         <nav className="mt-4 flex flex-col justify-between">
           <ul role="list" className="flex flex-col items-center space-y-1">
-            {routes.map((item) => (
+            {routes.slice(0, 3).map((item) => (
               <DesktopItem
                 key={item.href}
                 href={item.href}
@@ -57,7 +57,19 @@ const  DesktopSidebar: React.FC<DesktopSidebarProps> = ({ currentUser }) => {
           </ul>
         </nav>
         <nav className="mt-4 flex flex-col justify-between items-center">
+          <ul role="list" className="my-2">
+            {" "}
+            <DesktopItem
+              key={routes[3].href}
+              href={routes[3].href}
+              label={routes[3].label}
+              icon={routes[3].icon}
+              active={routes[3].active}
+              onClick={routes[3].onClick}
+            />
+          </ul>
           {/* <ThemeToggle /> */}
+
           <ProfileItem currentUser={currentUser} />
         </nav>
       </div>
