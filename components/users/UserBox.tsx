@@ -6,7 +6,7 @@ import { useCallback, useState } from "react";
 import { User } from "@prisma/client";
 import { useRouter } from "next/navigation";
 
-import Avatar from "./Avatar";
+import Avatar from "../Avatar";
 // import LoadingModal from "../../components/modals/LoadingModal";
 
 interface UserBoxProps {
@@ -17,8 +17,7 @@ const UserBox: React.FC<UserBoxProps> = ({ data }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-
-//   ON USER CHAT CLICK 
+  //   ON USER CHAT CLICK
   const handleClick = useCallback(() => {
     setIsLoading(true);
 
@@ -54,7 +53,9 @@ const UserBox: React.FC<UserBoxProps> = ({ data }) => {
         <div className="min-w-0 flex-1">
           <div className="focus:outline-none">
             <div className="flex justify-between items-center mb-1">
-              <p className="text-sm font-medium text-gray-900 dark:text-gray-200">{data.name}</p>
+              <p className="text-sm font-medium text-gray-900 dark:text-gray-200">
+                {data.name}
+              </p>
             </div>
           </div>
         </div>

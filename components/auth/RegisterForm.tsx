@@ -1,18 +1,19 @@
 "use client";
 
 import React, { useState } from "react";
+import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Form } from "./ui/form";
-import FormInput from "./FormInput";
-import { Button } from "./ui/button";
-import SocialIconButton from "./SocialIconButton";
+import { Form } from "../ui/form";
+import FormInput from "../FormInput";
+import { Button } from "../ui/button";
+import SocialIconButton from "../SocialIconButton";
 import { FaGithub, FaGoogle } from "react-icons/fa";
+import { useToast } from "../ui/use-toast";
 import { signIn } from "next-auth/react";
-import { useToast } from "./ui/use-toast";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { loginSchema } from "@/schemas/authSchema";
+import { registerSchema } from "@/schemas/authSchema";
 
 // DEFINE PROPS TYPE
 interface LoginFormProps {
@@ -21,16 +22,16 @@ interface LoginFormProps {
 }
 
 // AUTH FORM COMPONENT
-const LoginForm: React.FC<LoginFormProps> = ({ setVariant, router }) => {
-  // LOGIN OR REGISTER
-
+const RegisterForm: React.FC<LoginFormProps> = ({ setVariant, router }) => {
   const [isLoading, setIsLoading] = useState(false);
+
   const { toast } = useToast();
 
   // USE FORM
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
+      username: "",
       email: "",
       password: "",
     },
@@ -43,27 +44,26 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant, router }) => {
   } = form;
 
   // ON SUBMIT FUNCTION
-  const onSubmit: SubmitHandler<z.infer<typeof loginSchema>> = (data) => {
+  const onSubmit: SubmitHandler<z.infer<typeof registerSchema>> = async (
+    data
+  ) => {
     setIsLoading(true);
 
-    //LOGIN TO WEBSITE
-    signIn("credentials", {
-      ...data,
-      redirect: false,
-    })
-      .then((callback) => {
-        if (callback?.error) {
-          toast({
-            variant: "destructive",
-            description: `${callback.error}`,
-          });
-        }
-        if (callback?.ok && !callback.error) {
-          toast({
-            description: `Login successful!`,
-          });
-          router.push("/users");
-        }
+    // REGISTER USER
+    await axios
+      .post("/api/register", data)
+      .then(() => {
+        signIn("credentials", {
+          ...data,
+          redirect: false,
+        });
+      })
+      .catch((error) => {
+        toast({
+          variant: "destructive",
+          title: "An Error Occured!",
+          description: `${error.response.data}`,
+        });
       })
       .finally(() => setIsLoading(false));
   };
@@ -91,13 +91,26 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant, router }) => {
       })
       .finally(() => setIsLoading(false));
   };
+
   return (
     <div>
       <Form {...form}>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="space-y-2 w-full bg-white p-10 rounded-lg mt-7"
+          className="space-y-2 bg-white p-10 rounded-lg mt-7"
         >
+          <FormInput
+            form={form}
+            placeholder="Your Username"
+            name="username"
+            label="Username"
+            type="text"
+            required={true}
+            register={register}
+            errors={errors}
+            disabled={isLoading}
+          />
+
           <FormInput
             form={form}
             placeholder="example@email.com"
@@ -120,22 +133,19 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant, router }) => {
             errors={errors}
             disabled={isLoading}
           />
-
-          {/* SUBMIT BUTTON  */}
-
           <Button className=" w-full" size="sm" disabled={isLoading}>
-            Login
+            Register
           </Button>
           <h2 className=" text-sm">
-            Don't have an account?
+            Already have an account?
             <span>
               <Button
                 className="p-1"
                 variant="link"
                 type="button"
-                onClick={() => setVariant("REGISTER")}
+                onClick={() => setVariant("LOGIN")}
               >
-                create an account
+                login
               </Button>
             </span>
           </h2>
@@ -158,4 +168,4 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant, router }) => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

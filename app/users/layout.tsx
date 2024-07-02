@@ -1,9 +1,9 @@
 // TAKES IN SIDEBAR COMPONENT ACT AS A SHELL FOR THE MAIN CONTENT
 //SIDEBAR HAS DEKTOP SIDEBAR COMPONENT & MOBILE FOOTER
 
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/nav-links/Sidebar";
 import getUsers from "../actions/getUsers";
-import UserList from "@/components/UserList";
+import UserList from "@/components/users/UserList";
 
 export default async function UsersLayout({
   children,

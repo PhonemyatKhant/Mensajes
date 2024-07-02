@@ -3,17 +3,15 @@ import { FullConversationType } from "@/types";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useMemo } from "react";
-import Avatar from "./Avatar";
+import Avatar from "../Avatar";
 import clsx from "clsx";
 import { format } from "date-fns";
 
 interface ConversationBoxProps {
-
   data: FullConversationType;
   selected?: boolean;
 }
 const ConversationBox: React.FC<ConversationBoxProps> = ({
-
   data,
   selected,
 }) => {

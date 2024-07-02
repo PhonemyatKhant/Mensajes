@@ -1,16 +1,10 @@
-"use client";
-
-import { useState } from "react";
+'use client'
 
 import { User } from "@prisma/client";
 
-// import ThemeToggle from "../theme/ThemeToggle";
-// import DesktopItem from "./DesktopItem";
-// import ProfileItem from "./ProfileItem";
-
 import useRoutes from "@/app/hooks/useRoutes";
 import DesktopItem from "./DesktopItem";
-import ProfileItem from "./ProfileItem";
+import ProfileItem from "../ProfileItem";
 
 interface DesktopSidebarProps {
   currentUser: User;

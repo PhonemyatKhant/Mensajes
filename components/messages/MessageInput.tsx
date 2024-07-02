@@ -2,8 +2,8 @@
 import { conversationFormSchema } from "@/schemas/conversationFormSchema";
 import { FieldErrors, UseFormRegister, UseFormReturn } from "react-hook-form";
 import { z } from "zod";
-import { Input } from "./ui/input";
-import { FormControl, FormField, FormItem } from "./ui/form";
+import { Input } from "../ui/input";
+import { FormControl, FormField, FormItem } from "../ui/form";
 
 interface MessageInputProps {
   form: UseFormReturn<z.infer<typeof conversationFormSchema>>;
@@ -25,11 +25,10 @@ const MessageInput: React.FC<MessageInputProps> = ({
 }) => {
   return (
     <FormField
-    
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem className='w-full'>
+        <FormItem className="w-full">
           <FormControl>
             <Input
               id={name}

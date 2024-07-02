@@ -125,9 +125,9 @@ const ProfileSettingsPage = ({ currentUser }: { currentUser: User }) => {
             {/* PROFILE IMAGE  */}
             <div className=" mt-4">
               <Label className="">Image </Label>
-              <div className=" flex gap-2 items-center">
+              <div className=" overflow-hidden flex gap-2 items-center">
                 <Image
-                  className=" rounded-full mt-2"
+                  className=" w-20 h-20 rounded-full  object-cover  mt-2"
                   alt="profile image"
                   width={64}
                   height={64}

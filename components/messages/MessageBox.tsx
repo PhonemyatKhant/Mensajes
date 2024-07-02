@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 
-import Avatar from "./Avatar";
+import Avatar from "../Avatar";
 import { FullMessageType } from "@/types";
 // import ImageModal from "./ImageModal";
 

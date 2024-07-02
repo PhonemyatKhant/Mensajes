@@ -5,10 +5,10 @@ import { Conversation, User } from "@prisma/client";
 import Link from "next/link";
 import React, { useMemo, useState } from "react";
 import { HiChevronLeft } from "react-icons/hi";
-import Avatar from "./Avatar";
+import Avatar from "../Avatar";
 import { HiEllipsisHorizontal } from "react-icons/hi2";
-import { Sheet, SheetTrigger } from "./ui/sheet";
-import ProfileSheet from "./ProfileSheet";
+import { Sheet, SheetTrigger } from "../ui/sheet";
+import ProfileSheet from "../ProfileSheet";
 
 interface ConversationHeaderProps {
   conversation: Conversation & {
@@ -95,7 +95,6 @@ const ConversationHeader: React.FC<ConversationHeaderProps> = ({
           transition
         "
             />
-            
           </SheetTrigger>
           <ProfileSheet data={conversation} />
         </Sheet>

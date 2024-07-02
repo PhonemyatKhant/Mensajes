@@ -4,13 +4,13 @@ import useConversation from "@/app/hooks/useConversation";
 import React from "react";
 import { conversationFormSchema } from "@/schemas/conversationFormSchema";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Form } from "./ui/form";
+import { Form } from "../ui/form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { HiPaperAirplane } from "react-icons/hi";
 import { HiPhoto } from "react-icons/hi2";
-import MessageInput from "./MessageInput";
+import MessageInput from "../messages/MessageInput";
 import { CldUploadButton } from "next-cloudinary";
 
 const ConversationForm = () => {

@@ -1,8 +1,8 @@
 import getConversationById from "@/app/actions/getConversationById";
 import getMessages from "@/app/actions/getMessages";
-import ConversationBody from "@/components/ConversationBody";
-import ConversationForm from "@/components/ConversationForm";
-import ConversationHeader from "@/components/ConversationHeader";
+import ConversationBody from "@/components/conversations/ConversationBody";
+import ConversationForm from "@/components/conversations/ConversationForm";
+import ConversationHeader from "@/components/conversations/ConversationHeader";
 import EmptyState from "@/components/EmptyState";
 
 interface IParams {
@@ -29,7 +29,7 @@ const SingleConversationPage = async ({ params }: { params: IParams }) => {
     <div className="lg:pl-80 h-full">
       <div className="h-full flex flex-col">
         <ConversationHeader conversation={conversation} />
-        <ConversationBody initialMessages={messages}/>
+        <ConversationBody initialMessages={messages} />
         <ConversationForm />
       </div>
     </div>

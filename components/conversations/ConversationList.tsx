@@ -12,8 +12,8 @@ import {
   AlertDialog,
   AlertDialogContent,
   AlertDialogTrigger,
-} from "./ui/alert-dialog";
-import GroupChatDialog from "./GroupChatDialog";
+} from "../ui/alert-dialog";
+import GroupChatDialog from "../messages/GroupChatDialog";
 
 interface ConversationListProps {
   users: User[];

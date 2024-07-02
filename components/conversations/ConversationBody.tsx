@@ -8,7 +8,7 @@ import useConversation from "@/app/hooks/useConversation";
 
 // import { pusherClient, pusherEvents } from "../../../libs/pusher";
 import { FullMessageType } from "@/types";
-import MessageBox from "./MessageBox";
+import MessageBox from "../messages/MessageBox";
 
 interface ConversationBodyProps {
   initialMessages: FullMessageType[];

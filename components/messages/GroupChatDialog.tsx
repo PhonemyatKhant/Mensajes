@@ -15,15 +15,15 @@ import {
   AlertDialogHeader,
   AlertDialogDescription,
   AlertDialogTitle,
-} from "./ui/alert-dialog";
-import FormInput from "./FormInput";
-import { Form } from "./ui/form";
+} from "../ui/alert-dialog";
+import FormInput from "../FormInput";
+import { Form } from "../ui/form";
 import { z } from "zod";
 import { groupChatSchema } from "@/schemas/groupChatSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import SelectInput from "./SelectInput";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+import SelectInput from "../SelectInput";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 interface GroupChatDialogProps {
   setOpenDialog: any;
