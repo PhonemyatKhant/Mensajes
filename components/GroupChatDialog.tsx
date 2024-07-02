@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 
 import { User } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { AlertDialogContent } from "@radix-ui/react-alert-dialog";
+
 import {
   AlertDialogAction,
   AlertDialogCancel,
@@ -24,8 +24,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import SelectInput from "./SelectInput";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-
-
 
 interface GroupChatDialogProps {
   setOpenDialog: any;
@@ -44,7 +42,6 @@ const GroupChatDialog: React.FC<GroupChatDialogProps> = ({
     defaultValues: {
       name: "",
       members: [],
-      
     },
   });
   const {
@@ -57,12 +54,11 @@ const GroupChatDialog: React.FC<GroupChatDialogProps> = ({
   } = form;
 
   const members = watch("members");
-  // ON SUBMIT 
+  // ON SUBMIT
   const onSubmit: SubmitHandler<z.infer<typeof groupChatSchema>> = (data) => {
-    console.log('hello');
-    
+    console.log("hello");
+
     setIsLoading(true);
-    
 
     axios
       .post("/api/conversations", {
@@ -81,6 +77,9 @@ const GroupChatDialog: React.FC<GroupChatDialogProps> = ({
         setIsLoading(false);
       });
   };
+
+  // console.log(errors);
+  // console.log(members, "MEMBERS");
 
   return (
     <>
@@ -119,25 +118,29 @@ const GroupChatDialog: React.FC<GroupChatDialogProps> = ({
             form={form}
             register={register}
           />
+          {/* MEMBERS BUTTON  */}
           <div className=" space-x-3 space-y-3 ">
-            {members.map((member) => (
-              <Button
-                className=" bg-primary/80"
-                size={"sm"}
-                disabled={isLoading}
-                onClick={() => {
-                  const membersArray = members.filter(
-                    (m) => m.label !== member.label
-                  );
-                  setValue("members", membersArray, {
-                    shouldValidate: true,
-                  });
-                }}
-              >
-                {member.label}
-              </Button>
-            ))}{" "}
+            {members &&
+              members.map((member) => (
+                <Button
+                  key={member.label}
+                  className=" bg-primary/80"
+                  size={"sm"}
+                  disabled={isLoading}
+                  onClick={() => {
+                    const membersArray = members.filter(
+                      (m) => m.label !== member.label
+                    );
+                    setValue("members", membersArray, {
+                      shouldValidate: true,
+                    });
+                  }}
+                >
+                  {member.label}
+                </Button>
+              ))}{" "}
           </div>
+
           <AlertDialogFooter>
             <AlertDialogCancel type="button">Cancel</AlertDialogCancel>
             <Button disabled={isLoading} type="submit">

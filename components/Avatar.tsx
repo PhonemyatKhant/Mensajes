@@ -32,6 +32,7 @@ const Avatar: React.FC<AvatarProps> = ({ user }) => {
           fill
           src={user?.image || "/images/profile-avatar.png"}
           alt="Avatar"
+          sizes="36px"
         />
       </div>
       {/* {isActive && ( */}

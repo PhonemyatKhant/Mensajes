@@ -45,7 +45,7 @@ export async function POST(request: Request) {
           },
         });
 
-        console.log(newConversation, "THIS RAN");
+        
 
         return NextResponse.json(newConversation);
       } catch (error) {

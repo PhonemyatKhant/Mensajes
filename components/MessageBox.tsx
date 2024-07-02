@@ -82,6 +82,8 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
               onClick={() => setImageModalOpen(true)}
               src={data.image}
               className="
+              w-auto
+              h-auto
                 object-cover 
                 cursor-pointer 
                 hover:scale-110 

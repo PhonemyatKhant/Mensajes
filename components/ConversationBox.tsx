@@ -8,12 +8,12 @@ import clsx from "clsx";
 import { format } from "date-fns";
 
 interface ConversationBoxProps {
-  key: string;
+
   data: FullConversationType;
   selected?: boolean;
 }
 const ConversationBox: React.FC<ConversationBoxProps> = ({
-  key,
+
   data,
   selected,
 }) => {

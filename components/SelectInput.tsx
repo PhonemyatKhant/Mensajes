@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import {
   FormControl,
   FormField,
@@ -8,21 +8,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-  Control,
-  FieldErrors,
-  FieldValues,
-  UseFormRegister,
-  UseFormReset,
-  UseFormReturn,
-  UseFormSetValue,
-} from "react-hook-form";
-import { cn } from "@/lib/utils";
+import { UseFormReturn, UseFormSetValue } from "react-hook-form";
 import { z } from "zod";
-import { loginSchema, registerSchema } from "@/schemas/authSchema";
-import { conversationFormSchema } from "@/schemas/conversationFormSchema";
-import { groupChatSchema, memberSchema } from "@/schemas/groupChatSchema";
+import { groupChatSchema } from "@/schemas/groupChatSchema";
 import {
   Select,
   SelectContent,
@@ -39,7 +27,6 @@ type memberProps = {
 
 interface formProps {
   form: UseFormReturn<z.infer<typeof groupChatSchema>> | any;
-  reset?: UseFormReset<z.infer<typeof groupChatSchema>>;
   users: User[];
   label?: string;
   disabled?: boolean;
@@ -57,33 +44,28 @@ const SelectInput: React.FC<formProps> = ({
   users,
   setValue,
 }) => {
-  const membersArray = useMemo(() => {
-    return members;
-  }, [members]);
-  // console.log(members, "Members");
+  const membersArray = useMemo(() => members, [members]);
+
   return (
     <FormField
       disabled={disabled}
       control={form.control}
-      name="email"
+      name="members"
       render={({ field }) => (
         <FormItem>
           <FormLabel>{label} </FormLabel>
           <Select
             onValueChange={(name) => {
-              field.onChange;
-              // search id
-              const id = users.map((user) => {
-                if (user.name === name) return user.id;
-              });
+              const user = users.find((user) => user.name === name);
 
-              const nameArray = membersArray.map(member=>member.label)
-             
-
-              if (!nameArray.includes(name)) {
+              // IF THE USER EXISTS AND NOT EXISTS IN THE MEMBERS ARRAY 
+              if (
+                user &&
+                !membersArray.some((member) => member.value === user.id)
+              ) {
                 setValue(
                   "members",
-                  [...membersArray, { label: name, value: id[0]! }],
+                  [...membersArray, { label: name, value: user.id }],
                   {
                     shouldValidate: true,
                   }
@@ -99,13 +81,12 @@ const SelectInput: React.FC<formProps> = ({
             </FormControl>
             <SelectContent>
               {users.map((user) => (
-                <SelectItem id={user.id!} value={user.name!}>
-                  {user.name}{" "}
+                <SelectItem key={user.id} value={user.name!}>
+                  {user.name}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
-
           <FormMessage />
         </FormItem>
       )}
