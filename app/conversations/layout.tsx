@@ -3,6 +3,7 @@ import Sidebar from "@/components/nav-links/Sidebar";
 import React from "react";
 import getConversations from "../actions/getConversations";
 import getUsers from "../actions/getUsers";
+import { Loader2 } from "lucide-react";
 
 const layout = async ({ children }: { children: React.ReactNode }) => {
   const conversations = await getConversations();
@@ -13,6 +14,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
       <ConversationList users={users!} initialItems={conversations} />
       <div className=" h-full">{children} </div>
     </Sidebar>
+    
   );
 };
 

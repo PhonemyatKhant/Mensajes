@@ -9,6 +9,7 @@ import Avatar from "../Avatar";
 import { HiEllipsisHorizontal } from "react-icons/hi2";
 import { Sheet, SheetTrigger } from "../ui/sheet";
 import ProfileSheet from "../ProfileSheet";
+import AvatarGroup from "../AvatarGroup";
 
 interface ConversationHeaderProps {
   conversation: Conversation & {
@@ -73,7 +74,11 @@ const ConversationHeader: React.FC<ConversationHeaderProps> = ({
           </Link>
 
           {/* USER ICON  */}
-          <Avatar user={otherUser} />
+          {conversation.isGroup ? (
+            <AvatarGroup users={conversation.users} />
+          ) : (
+            <Avatar user={otherUser} />
+          )}
 
           {/* NAME AND STATUS  */}
           <div className="flex flex-col dark:text-gray-200">

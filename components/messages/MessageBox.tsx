@@ -9,6 +9,8 @@ import Image from "next/image";
 
 import Avatar from "../Avatar";
 import { FullMessageType } from "@/types";
+import ImageModal from "../ImageModal";
+import { AlertDialog, AlertDialogTrigger } from "../ui/alert-dialog";
 // import ImageModal from "./ImageModal";
 
 interface MessageBoxProps {
@@ -66,30 +68,26 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
 
         {/* MESSAGE CONTAINER  */}
         <div className={message}>
-          {/* IMAGE MODEL POP UP  */}
-          {/* <ImageModal
-            src={data.image}
-            isOpen={imageModalOpen}
-            onClose={() => setImageModalOpen(false)}
-          /> */}
-
           {/* IF IMAGE SHOW IMAGE ELSE SHOW MESSAGE  */}
           {data.image ? (
-            <Image
-              alt="Image"
-              height="288"
-              width="288"
-              onClick={() => setImageModalOpen(true)}
-              src={data.image}
-              className="
-              w-auto
-              h-auto
-                object-cover 
-                cursor-pointer 
-                hover:scale-110 
-                transition
-              "
-            />
+            <AlertDialog>
+              <AlertDialogTrigger>
+                <Image
+                  alt="Image"
+                  height="288"
+                  width="288"
+                  onClick={() => setImageModalOpen(true)}
+                  src={data.image}
+                  className="w-auto h-auto object-cover cursor-pointer hover:scale-110 transition"
+                />
+              </AlertDialogTrigger>
+              {/* IMAGE MODEL POP UP  */}
+              <ImageModal
+                src={data.image}
+                isOpen={imageModalOpen}
+                onClose={() => setImageModalOpen(false)}
+              />
+            </AlertDialog>
           ) : (
             <div>{data.body}</div>
           )}

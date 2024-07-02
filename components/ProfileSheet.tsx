@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import useConversation from "@/app/hooks/useConversation";
 import axios from "axios";
 import { useToast } from "./ui/use-toast";
+import AvatarGroup from "./AvatarGroup";
 
 interface ProfileSheetProps {
   data: Conversation & { users: User[] };
@@ -76,7 +77,11 @@ const ProfileSheet: React.FC<ProfileSheetProps> = ({ data }) => {
         {/* AVATAR PIC  */}
         <div className=" w-fit relative">
           {" "}
-          <Avatar user={otherUser} />
+          {data.isGroup ? (
+            <AvatarGroup users={data.users} />
+          ) : (
+            <Avatar user={otherUser} />
+          )}
         </div>
         {/* NAME  */}
         <SheetTitle>{title} </SheetTitle>
