@@ -18,10 +18,11 @@ import { cn } from "@/lib/utils";
 import { z } from "zod";
 import { loginSchema, registerSchema } from "@/schemas/authSchema";
 import { conversationFormSchema } from "@/schemas/conversationFormSchema";
+import { groupChatSchema } from "@/schemas/groupChatSchema";
 
 interface formProps {
   form:
-    | UseFormReturn<z.infer<typeof loginSchema | typeof registerSchema | typeof conversationFormSchema>>
+    | UseFormReturn<z.infer<typeof loginSchema | typeof registerSchema | typeof conversationFormSchema | typeof groupChatSchema>>
     | any;
   // control: Control<z.infer<typeof loginSchema | typeof registerSchema>>;
   placeholder?: string;

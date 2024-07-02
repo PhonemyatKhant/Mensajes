@@ -19,28 +19,38 @@ export async function POST(request: Request) {
       return new NextResponse("Invalid data", { status: 400 });
     }
 
-    // CREATE NEW GROUP CHAT 
+    // CREATE NEW GROUP CHAT
     if (isGroup) {
-      // CREATE NEW CONVERSATION AND PASS IN DATA
-      const newConversation = await prisma.conversation.create({
-        data: {
-          name,
-          isGroup,
-          users: {
-            connect: [
-              ...members.map((member: { value: string }) => ({
-                id: member.value,
-              })),
-              {
-                id: currentUser.id,
-              },
-            ],
+      console.log(isGroup, "THIS RAN");
+
+      try {
+        // CREATE NEW CONVERSATION AND PASS IN DATA
+        const newConversation = await prisma.conversation.create({
+          data: {
+            name,
+            isGroup,
+            users: {
+              connect: [
+                ...members.map((member: { value: string }) => ({
+                  id: member.value,
+                })),
+                {
+                  id: currentUser.id,
+                },
+              ],
+            },
           },
-        },
-        include: {
-          users: true,
-        },
-      });
+          include: {
+            users: true,
+          },
+        });
+
+        console.log(newConversation, "THIS RAN");
+
+        return NextResponse.json(newConversation);
+      } catch (error) {
+        console.log(error, "ERROR");
+      }
 
       // Update all connections with new conversation
       //   newConversation.users.forEach((user) => {
@@ -52,11 +62,9 @@ export async function POST(request: Request) {
       //       );
       //     }
       //   });
-
-      return NextResponse.json(newConversation);
     }
- 
-    // IF CHAT ALREADY EXISTS 
+
+    // IF CHAT ALREADY EXISTS
     const existingConversations = await prisma.conversation.findMany({
       where: {
         OR: [
@@ -80,7 +88,7 @@ export async function POST(request: Request) {
       return NextResponse.json(singleConversation);
     }
 
-    // CREATE NEW ONE ON ONE CONVERSATION 
+    // CREATE NEW ONE ON ONE CONVERSATION
     const newConversation = await prisma.conversation.create({
       data: {
         users: {

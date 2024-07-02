@@ -7,15 +7,25 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import ConversationBox from "./ConversationBox";
+import { User } from "@prisma/client";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTrigger,
+} from "./ui/alert-dialog";
+import GroupChatDialog from "./GroupChatDialog";
 
 interface ConversationListProps {
+  users: User[];
   initialItems: FullConversationType[];
 }
 
 const ConversationList: React.FC<ConversationListProps> = ({
+  users,
   initialItems,
 }) => {
   const [items, setItems] = useState(initialItems);
+  const [openDialog, setOpenDialog] = useState(false);
 
   const router = useRouter();
 
@@ -43,10 +53,12 @@ const ConversationList: React.FC<ConversationListProps> = ({
           <div className="text-2xl font-bold text-neutral-800 dark:text-gray-200">
             Messages
           </div>
-
-          <div
-            // onClick={() => setIsModalOpen(true)}
-            className="
+          {/* ADD GROUP CHAT BUTTON */}
+          <AlertDialog open={openDialog} onOpenChange={setOpenDialog}>
+            <AlertDialogTrigger>
+              <div
+                // onClick={() => setIsModalOpen(true)}
+                className="
                 rounded-full 
                 p-2 
                 bg-gray-100 
@@ -57,11 +69,16 @@ const ConversationList: React.FC<ConversationListProps> = ({
                 dark:bg-lightgray
                 dark:text-gray-200
               "
-          >
-            <MdOutlineGroupAdd size={20} />
-          </div>
+              >
+                <MdOutlineGroupAdd size={20} />
+              </div>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <GroupChatDialog setOpenDialog={setOpenDialog} users={users} />
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
-        {items.map((item,i) => (
+        {items.map((item, i) => (
           <ConversationBox
             key={item?.id}
             data={item}
