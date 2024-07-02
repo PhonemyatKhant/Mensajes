@@ -127,7 +127,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setVariant, router }) => {
             Login
           </Button>
           <h2 className=" text-sm">
-            Don't have an account?
+            Don&apos;t have an account?
             <span>
               <Button
                 className="p-1"
