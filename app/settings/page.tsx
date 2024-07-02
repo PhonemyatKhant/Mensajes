@@ -7,7 +7,7 @@ const SettingsPage = async () => {
 
   return (
     <>
-      <ProfileSettingsPage currentUser={currentUser!} />
+      {currentUser && <ProfileSettingsPage currentUser={currentUser!} />}
     </>
   );
 };
