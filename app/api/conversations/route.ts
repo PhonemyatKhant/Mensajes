@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import getCurrentUser from "../../actions/getCurrentUser";
 import prisma from "@/lib/prismadb";
+import { pusherServer } from "@/lib/pusher";
 // import { pusherEvents, pusherServer } from "../../libs/pusher";
 
 export async function POST(request: Request) {
@@ -21,7 +22,7 @@ export async function POST(request: Request) {
 
     // CREATE NEW GROUP CHAT
     if (isGroup) {
-      console.log(isGroup, "THIS RAN");
+      // console.log(isGroup, "THIS RAN");
 
       try {
         // CREATE NEW CONVERSATION AND PASS IN DATA
@@ -45,23 +46,23 @@ export async function POST(request: Request) {
           },
         });
 
-        
+        // Update all connections with new conversation
+        newConversation.users.forEach((user) => {
+          if (user.email) {
+            pusherServer.trigger(
+              user.email,
+              'conversation:new',
+              newConversation
+            );
+          }
+        });
 
         return NextResponse.json(newConversation);
       } catch (error) {
         console.log(error, "ERROR");
       }
 
-      // Update all connections with new conversation
-      //   newConversation.users.forEach((user) => {
-      //     if (user.email) {
-      //       pusherServer.trigger(
-      //         user.email,
-      //         pusherEvents.NEW_CONVERSATION,
-      //         newConversation
-      //       );
-      //     }
-      //   });
+      
     }
 
     // IF CHAT ALREADY EXISTS
@@ -108,15 +109,15 @@ export async function POST(request: Request) {
     });
 
     // Update all connections with new conversation
-    // newConversation.users.map((user) => {
-    //   if (user.email) {
-    //     pusherServer.trigger(
-    //       user.email,
-    //       pusherEvents.NEW_CONVERSATION,
-    //       newConversation
-    //     );
-    //   }
-    // });
+    newConversation.users.map((user) => {
+      if (user.email) {
+        pusherServer.trigger(
+          user.email,
+          'conversation:new',
+          newConversation
+        );
+      }
+    });
 
     return NextResponse.json(newConversation);
   } catch (error) {

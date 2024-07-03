@@ -62,7 +62,7 @@ const ConversationBody: React.FC<ConversationBodyProps> = ({
 
     // BIND PUSHERCLIENT TO EXPECT THE NEW MESSAGE
     pusherClient.bind("messages:new", messageHandler);
-    pusherClient.bind("messages:update", updateMessageHandler);
+    pusherClient.bind("message:update", updateMessageHandler);
 
     // UNBIND BEFORE COMPONENT UNMOUNT
     return () => {
