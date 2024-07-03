@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import getCurrentUser from "../../../../actions/getCurrentUser";
 import prisma from "@/lib/prismadb";
+import { pusherServer } from "@/lib/pusher";
 // import { pusherEvents, pusherServer } from "../../../../libs/pusher";
 
 interface IParams {
@@ -62,10 +63,10 @@ export async function POST(request: Request, { params }: { params: IParams }) {
     });
 
     // Update all connections with new seen
-    // await pusherServer.trigger(currentUser.email, pusherEvents.UPDATE_CONVERSATION, {
-    //   id: conversationId,
-    //   messages: [updatedMessage],
-    // });
+    await pusherServer .trigger(currentUser.email, 'conversation:update', {
+      id: conversationId,
+      messages: [updatedMessage],
+    });
 
     // If user has already seen the message, no need to go further
     if (lastMessage.seenIds.indexOf(currentUser.id) !== -1) {
@@ -73,7 +74,7 @@ export async function POST(request: Request, { params }: { params: IParams }) {
     }
 
     // Update last message seen
-    // await pusherServer.trigger(conversationId!, pusherEvents.UPDATE_MESSAGE, updatedMessage);
+    await pusherServer.trigger(conversationId!, 'message:update', updatedMessage);
 
     return NextResponse.json(updatedMessage);
   } catch (error) {
