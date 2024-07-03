@@ -10,6 +10,7 @@ import { HiEllipsisHorizontal } from "react-icons/hi2";
 import { Sheet, SheetTrigger } from "../ui/sheet";
 import ProfileSheet from "../ProfileSheet";
 import AvatarGroup from "../AvatarGroup";
+import useActiveList from "@/app/hooks/useActiveList";
 
 interface ConversationHeaderProps {
   conversation: Conversation & {
@@ -24,15 +25,18 @@ const ConversationHeader: React.FC<ConversationHeaderProps> = ({
 
   const [open, setOpen] = useState(false);
 
+  const { members } = useActiveList();
+  const isActive = members.indexOf(otherUser?.email!) !== -1;
+
   // ACTIVE STATUS OR NO. OF GROUP MEMBERS
   const statusText = useMemo(() => {
     if (conversation.isGroup) {
       return `${conversation.users.length} members`;
     }
 
-    // return isActive ? "Active" : "Offline";
+    return isActive ? "Active" : "Offline";
     return "Active";
-  }, [conversation.isGroup, conversation.users.length]);
+  }, [conversation.isGroup, conversation.users.length,isActive]);
   return (
     <>
       {/* <ChatDrawer
