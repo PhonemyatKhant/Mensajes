@@ -1,5 +1,5 @@
 import React from "react";
-import ProfileSettingsPage from "./ProfileSettings";
+import ProfileSettingsPage from "../../components/ProfileSettings";
 import getCurrentUser from "../actions/getCurrentUser";
 
 const SettingsPage = async () => {
@@ -7,7 +7,12 @@ const SettingsPage = async () => {
 
   return (
     <>
-      <ProfileSettingsPage currentUser={currentUser!} />
+      <div>Error </div>
+      {currentUser ? (
+        <ProfileSettingsPage currentUser={currentUser!} />
+      ) : (
+        <>Error Fetching Data</>
+      )}
     </>
   );
 };
