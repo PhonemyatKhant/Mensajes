@@ -7,7 +7,7 @@ const SettingsPage = async () => {
 
   return (
     <>
-      <div>Error </div>
+      
       {currentUser ? (
         <ProfileSettingsPage currentUser={currentUser!} />
       ) : (
