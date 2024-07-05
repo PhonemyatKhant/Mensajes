@@ -73,8 +73,9 @@ const ConversationList: React.FC<ConversationListProps> = ({
         return [...current.filter((convo) => convo.id !== conversation.id)];
       });
 
-      if (conversationId == conversation.id) {
+      if (conversationId === conversation.id) {
         router.push("/conversations");
+        router.refresh();
       }
     };
 
@@ -88,7 +89,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
       pusherClient.unbind("conversation:update", updateHandler);
       pusherClient.unbind("conversation:remove", removeHandler);
     };
-  }, [pusherKey,conversationId,router]);
+  }, [pusherKey, conversationId, router]);
   return (
     <aside
       className={clsx(
