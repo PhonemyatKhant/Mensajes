@@ -6,13 +6,13 @@ const getUsers = async () => {
   if (!session?.user?.email) return [];
 
   try {
-    const users = prisma?.user.findMany({
+    const users = await prisma?.user.findMany({
       // GET RECENT USER FIRST
       orderBy: {
         createdAt: "desc",
       },
 
-      //   where TO FIND THE CURRENT USER AND EXCLUED IT
+      // FIND THE CURRENT USER AND EXCLUED IT
       where: {
         NOT: {
           email: session.user.email,
