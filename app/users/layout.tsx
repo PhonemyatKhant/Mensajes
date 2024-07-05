@@ -15,7 +15,7 @@ export default async function UsersLayout({
     <Sidebar>
       {/* CHILDREN OF SIDEBAR PL 20 MAIN CONTAINER RIGHT  */}
       {/* FIXED CONTAINER USER LIST  */}
-      <UserList items={users} />
+      <UserList items={users!} />
       <div className=" h-full">{children}</div>
     </Sidebar>
   );
