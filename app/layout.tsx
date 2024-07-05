@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { Toaster } from "@/components/ui/toaster";
 import Provider from "@/components/Provider";
+import ActiveStatus from "@/components/ActiveStatus";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Provider>
-          <main className=" h-full">{children}</main>
+          <main className=" h-full">
+            {" "}
+            <ActiveStatus />
+            {children}
+          </main>
           <Toaster />
         </Provider>
       </body>

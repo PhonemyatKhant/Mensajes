@@ -17,6 +17,7 @@ import useConversation from "@/app/hooks/useConversation";
 import axios from "axios";
 import { useToast } from "./ui/use-toast";
 import AvatarGroup from "./AvatarGroup";
+import useActiveList from "@/app/hooks/useActiveList";
 
 interface ProfileSheetProps {
   data: Conversation & { users: User[] };
@@ -24,6 +25,9 @@ interface ProfileSheetProps {
 
 const ProfileSheet: React.FC<ProfileSheetProps> = ({ data }) => {
   const otherUser = useOtherUser(data);
+
+  const { members } = useActiveList();
+  const isActive = members.indexOf(otherUser?.email!) !== -1;
 
   const joinedDate = useMemo(() => {
     return format(new Date(otherUser.createdAt), "PP");
@@ -38,9 +42,9 @@ const ProfileSheet: React.FC<ProfileSheetProps> = ({ data }) => {
       return `${data.users.length} members`;
     }
 
-    // return isActive ? "Active" : "Offline";
+    return isActive ? "Active" : "Offline";
     return "Active";
-  }, [data.isGroup, data.users.length]);
+  }, [data.isGroup, data.users.length,isActive]);
 
   //   DELETE CONVERSATION FUNCTION
   const router = useRouter();

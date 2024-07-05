@@ -15,7 +15,7 @@ import toast from "react-hot-toast";
 import { z } from "zod";
 
 import FormInput from "@/components/FormInput";
-import getCurrentUser from "../actions/getCurrentUser";
+import getCurrentUser from "../app/actions/getCurrentUser";
 import { User } from "@prisma/client";
 
 const ProfileSettingsPage = ({ currentUser }: { currentUser: User }) => {
