@@ -1,6 +1,6 @@
 # Real-time Messaging App
 
-![Alt text](./assets/Mensajes.jpeg)
+![Alt text](./public/assets/Mensajes.jpeg)
 
 
 ## A fully functional chat application written in Next.js
