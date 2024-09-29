@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Real-time Messaging App
 
-## Getting Started
+![Alt text](./assets/screenshot.jpeg)
 
-First, run the development server:
 
+## A fully functional chat application written in Next.js
+
+This project is a fully-featured chat app built with Next.js that allows users to send messages and share images in real time. The website supports both individual and group chats, enabling users to engage in private conversations or participate in group discussions.
+
+## Features
+
+- Send text messages and images
+- Supports group chat creation
+- Seen and active status
+- User Authentication
+- Profile Customization
+- Responsive Design
+
+## How To Use
+
+1. Clone the repository
+```bash
+git clone https://github.com/PhonemyatKhant/Mensajes.git
+```
+2. Install Dependencies
+```bash
+npm install
+```
+3. Run the deployment server
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deployment 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The project is already deployed on vercel for you to test it out!
+```bash
+https://mensajes-pmk.vercel.app/
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
